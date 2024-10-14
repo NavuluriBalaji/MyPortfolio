@@ -130,23 +130,9 @@
                 }
               </script>
 
-              <div class="swiper-wrapper align-items-center">
+              <div class="IMAGES_SLIDESHOW swiper-wrapper align-items-center">
 
-                <div class="swiper-slide">
-                  <img src="D:\MyPortfolio\iPortfolio\assets\img\portfolio\Pre-term.jpg" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/product-1.jpg" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/branding-1.jpg" alt="">
-                </div>
-
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/books-1.jpg" alt="">
-                </div>
+                
 
               </div>
               <div class="swiper-pagination"></div>
@@ -157,15 +143,14 @@
             <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
               <h3>Project information</h3>
               <ul>
-                <li><strong>Category</strong>: Web design</li>
-                <li><strong>Client</strong>: ASU Company</li>
-                <li><strong>Project date</strong>: 01 March, 2020</li>
-                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+                <li><strong>Category</strong>: <span class="FULL_CATEGORY"></span></li>
+                <li><strong>Client</strong>: <span class="CLIENT"></span></li>
+                <li><strong>Project URL</strong>: <a href="" class="PROJECT_URL"></a> </li>
               </ul>
             </div>
             <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2>Exercitationem repudiandae officiis neque suscipit</h2>
-              <p>
+              <h2 class="FULL_TITLE"></h2>
+              <p class="FULL_DESCRIPTION">
                 Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
               </p>
             </div>
@@ -216,10 +201,61 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/projects.js"></script>
 
   <script>
-    const searchParams = new URLSearchParams(window.location.search);
-    console.log(searchParams);
+
+    function getURLParam(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) 
+        {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) 
+            {
+                return sParameterName[1];
+            }
+        }
+    }
+
+    function createImageForSlider(url) {
+      return `
+        <div class="swiper-slide">
+          <img src="${url}" alt="Project Demo Image">
+        </div>
+      `
+    }
+
+    function populateProjectFields() {
+      let projectID = getURLParam("project");
+
+      if (!projectID) {
+        alert("No Project ID found.");
+        return;
+      }
+
+      if (!Object.keys(projects).includes(projectID)) {
+        alert("Project not found.");
+        return;
+      }
+
+      let projectInfo = projects[projectID]
+
+      document.querySelector(".FULL_CATEGORY").innerHTML = projectInfo['FULL_CATEGORY']
+      document.querySelector(".CLIENT").innerHTML = projectInfo['CLIENT']
+      document.querySelector(".PROJECT_URL").innerHTML = projectInfo['PROJECT_URL']
+      document.querySelector(".FULL_TITLE").innerHTML = projectInfo['FULL_TITLE']
+      document.querySelector(".FULL_DESCRIPTION").innerHTML = projectInfo['FULL_DESCRIPTION']
+
+
+      projectInfo['IMAGES'].forEach((image) => {
+        document.querySelector(".IMAGES_SLIDESHOW").innerHTML += createImageForSlider(image);
+      })
+
+    }
+
+    populateProjectFields();
+
     
   </script>
 

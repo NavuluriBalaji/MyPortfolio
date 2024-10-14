@@ -227,3 +227,33 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+
+
+
+// LIST ALL PROJECTS IN MAIN PAGE.
+
+function createProjectHTML(TITLE,  DESCRIPTION, CATEGORY, IMAGE_URL, PROJECT_ID) {
+
+  return `
+    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-${CATEGORY}">
+      <div class="portfolio-content h-100">
+        <img src=${IMAGE_URL} class="img-fluid" alt="">
+        <div class="portfolio-info">
+          <h4>${TITLE}</h4>
+          <p>${DESCRIPTION}</p>
+          <a href=${IMAGE_URL} title=${TITLE} data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          <a href="portfolio-details.html?project=${PROJECT_ID}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+
+
+let projectsContainer = document.querySelector(".row.gy-4.isotope-container");
+
+Object.keys(projects).forEach((projectID) => {
+  let project = projects[projectID];
+  projectsContainer.innerHTML += createProjectHTML(project.TITLE, project.DESCRIPTION, project.CATEGORY, project.IMAGE_URL, projectID);
+})
