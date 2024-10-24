@@ -251,6 +251,8 @@ function createProjectHTML(TITLE,  DESCRIPTION, CATEGORY, IMAGE_URL, PROJECT_ID)
 
 
 
+
+
 let projectsContainer = document.querySelector(".row.gy-4.isotope-container");
 
 Object.keys(projects).forEach((projectID) => {
